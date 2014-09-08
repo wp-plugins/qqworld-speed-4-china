@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: QQWorld Speed for China
-Plugin URI: http://www.qqworld.org
+Plugin URI: https://wordpress.org/plugins/qqworld-speed-4-china/
 Description: QQWorld's plugin that using for WP speed up for China
 Version: 1.0.0
 Author: Michael Wang

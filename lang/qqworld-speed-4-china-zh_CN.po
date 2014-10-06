@@ -1,0 +1,50 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: QQworld Speed for China\n"
+"Report-Msgid-Bugs-To: http://www.qqworld.org\n"
+"POT-Creation-Date: 2011-12-10 19:47:15+00:00\n"
+"PO-Revision-Date: 2014-10-06 15:42+0800\n"
+"Last-Translator: Michael Wang <admin@qqworld.org>\n"
+"Language-Team: QQWorld <admin@qqworld.org>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.6.9\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "QQWorld Speed for China"
+msgstr "QQWorld加速中国版"
+
+msgid "Using Google Fonts"
+msgstr "使用谷歌字体"
+
+msgid "(Speed up)"
+msgstr "（加速）"
+
+msgid "Enabled"
+msgstr "开启"
+
+msgid "Disabled"
+msgstr "禁用"
+
+msgid "Auto Update Core"
+msgstr "自动检查升级核心"
+
+msgid "Auto Update Plugins"
+msgstr "自动检查升级插件"
+
+msgid "Auto Update Themes"
+msgstr "自动检查升级主题"
+
+msgid ""
+"Because of Google was blocked by china or access wordpress.org slow, so "
+"sometimes china network access wordpress website is very slow, using my "
+"plugin will be able to fix this."
+msgstr ""
+"因为中国大陆屏蔽了Google或访问wordpress.org速度慢，所以有时候会导致大陆的网络"
+"访问Wordpress站点速度非常慢，使用本插件可以有效解决这个问题。"
+
+msgid "If you want to update, don't forget temporarily enable these options."
+msgstr "如果你想更新的时候，不要忘记临时启用这些选项。"

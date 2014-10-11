@@ -2,10 +2,11 @@
 /*
 Plugin Name: QQWorld Speed for China
 Plugin URI: http://www.qqworld.org
-Description: QQWorld's plugin that using for WP speed up for China
+Description: Because of Google was blocked by china or access wordpress.org slow, so sometimes china network access wordpress website is very slow, using my plugin will be able to fix this.
 Version: 1.1
 Author: Michael Wang
 Author URI: http://www.qqworld.org
+Text Domain: qqworld-speed-4-china
 */
 
 define('QQWORLD_SPEED4CHINA_DIR', __DIR__);

@@ -3,7 +3,7 @@
 Plugin Name: QQWorld Speed for China
 Plugin URI: http://www.qqworld.org
 Description: Because of Google was blocked by china or access wordpress.org slow, so sometimes china network access wordpress website is very slow, using my plugin will be able to fix this.
-Version: 1.1
+Version: 1.2
 Author: Michael Wang
 Author URI: http://www.qqworld.org
 Text Domain: qqworld-speed-4-china
@@ -78,9 +78,32 @@ class qqworld_speed4china {
 	}
 
 	public function wp_default_styles(&$styles) {
-		// http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,300,400,600&subset=latin,latin-ext
 		$styles->remove('open-sans');
-		$styles->add( 'open-sans', QQWORLD_SPEED4CHINA_URL . 'opensans.css' );
+		$open_sans_font_url = '';
+
+		/* translators: If there are characters in your language that are not supported
+		 * by Open Sans, translate this to 'off'. Do not translate into your own language.
+		 */
+		if ( 'off' !== _x( 'on', 'Open Sans font: on or off' ) ) {
+			$subsets = 'latin,latin-ext';
+
+			/* translators: To add an additional Open Sans character subset specific to your language,
+			 * translate this to 'greek', 'cyrillic' or 'vietnamese'. Do not translate into your own language.
+			 */
+			$subset = _x( 'no-subset', 'Open Sans font: add new subset (greek, cyrillic, vietnamese)' );
+
+			if ( 'cyrillic' == $subset ) {
+				$subsets .= ',cyrillic,cyrillic-ext';
+			} elseif ( 'greek' == $subset ) {
+				$subsets .= ',greek,greek-ext';
+			} elseif ( 'vietnamese' == $subset ) {
+				$subsets .= ',vietnamese';
+			}
+
+			// Hotlink Open Sans, for now
+			$open_sans_font_url = "//fonts.useso.com/css?family=Open+Sans:300italic,400italic,600italic,300,400,600&subset=$subsets";
+		}
+		$styles->add( 'open-sans', $open_sans_font_url );
 	}
 
 	public function load_language() {

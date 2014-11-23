@@ -2,7 +2,7 @@
 Tags: speed, china
 Requires at least: 3.0
 Tested up to: 4.0.1
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,6 +22,10 @@ If you want to update, don't forget temporarily enable these options.
 2. Activate plugin in the plugins admin page
 
 == Changelog ==
+
+= 1.2 =
+新特性：使用360网站卫士常用前端公共库CDN服务替代本地字体<br />
+New feature: Use fonts.useso.com instead of local fonts.
 
 = 1.1 =
 新特性：禁用自动检查更新<br />

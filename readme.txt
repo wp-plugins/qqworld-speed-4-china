@@ -2,16 +2,16 @@
 Tags: speed, china
 Requires at least: 3.0
 Tested up to: 4.0.1
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Because of Google was blocked by china, so sometimes china network access wordpress website is very slow, using my plugin will be able to fix this.
+如果您的主机在中国，您可能需要这个插件使您的网站跑得更快。If your host is in china, you might need this plugin to make your website that running faster. 
 
 == Description ==
 
-因为中国大陆屏蔽了Google，所以有时候会导致大陆的网络访问Wordpress站点速度非常慢，使用本插件可以有效解决这个问题。<br />
-Because of Google was blocked by china, so sometimes china network access wordpress website is very slow, using my plugin will be able to fix this.
+如果您的主机在中国，您可能需要这个插件使您的网站跑得更快。<br />
+If your host is in china, you might need this plugin to make your website that running faster.
 
 如果你想更新的时候，不要忘记临时启用这些选项。<br />
 If you want to update, don't forget temporarily enable these options.
@@ -22,6 +22,10 @@ If you want to update, don't forget temporarily enable these options.
 2. Activate plugin in the plugins admin page
 
 == Changelog ==
+
+= 1.3 =
+新特性：禁用Dropbox jQuery插件<br />
+New feature: Disabled Dropbox-plugin.
 
 = 1.2 =
 新特性：使用360网站卫士常用前端公共库CDN服务替代本地字体<br />

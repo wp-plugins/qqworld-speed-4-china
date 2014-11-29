@@ -2,8 +2,8 @@
 /*
 Plugin Name: QQWorld Speed for China
 Plugin URI: http://www.qqworld.org
-Description: Because of Google was blocked by china or access wordpress.org slow, so sometimes china network access wordpress website is very slow, using my plugin will be able to fix this.
-Version: 1.2
+Description: If your host is in china, you might need this plugin to make your website that running faster.
+Version: 1.3
 Author: Michael Wang
 Author URI: http://www.qqworld.org
 Text Domain: qqworld-speed-4-china
@@ -30,51 +30,60 @@ class qqworld_speed4china {
 	public function get_value() {
 		$this->values = get_option('qqworld-speed-4-china');
 		$this->using_google_fonts = isset($this->values['using-google-fonts']) ? $this->values['using-google-fonts'] : 'disabled';
+		$this->enable_zxcvbn_async = isset($this->values['enable-zxcvbn-async']) ? $this->values['enable-zxcvbn-async'] : 'disabled';
 		$this->auto_update_code = isset($this->values['auto-update-core']) ? $this->values['auto-update-core'] : 'disabled';
 		$this->auto_update_plugins = isset($this->values['auto-plugins-plugins']) ? $this->values['auto-plugins-plugins'] : 'disabled';
 		$this->auto_update_themes = isset($this->values['auto-update-themes']) ? $this->values['auto-update-themes'] : 'disabled';
 	}
 
 	public function speed_up() {
-		//开启开发更新模式，和开发版本同步：
-		//add_filter( 'allow_dev_auto_core_updates', '__return_true' );
-		//关闭小版本更新：
-		//add_filter( 'allow_minor_auto_core_updates', '__return_false' );
-		//开启大版本更新：
-		//add_filter( 'allow_major_auto_core_updates', '__return_true' );
-
-		//开启插件自动更新：
-		//add_filter( 'auto_update_plugin', '__return_true' );
-		//开启主题自动更新：
-		//add_filter( 'auto_update_theme', '__return_true' );
-
-		//翻译更新默认是开启的，如果要关闭：
-		//add_filter( 'auto_update_translation', '__return_false' );
-
-		//关闭核心文件更新
-		//add_filter( 'auto_update_core', '__return_false' );
-
-		//关闭所有更新
-		//add_filter( 'automatic_updater_disabled', '__return_true' );
-
 		if ($this->using_google_fonts == 'disabled') {
 			add_action( 'wp_default_styles', array($this, 'wp_default_styles') );
+		}
+
+		if ($this->enable_zxcvbn_async == 'disabled') {
+			add_action( 'wp_default_scripts', array($this, 'wp_default_scripts') );
 		}
 
 		if ($this->auto_update_code == 'disabled') {
 			add_filter( 'pre_site_transient_update_core', create_function('$a', "return null;"));
 			remove_action( 'admin_init', '_maybe_update_core');
+			remove_action( 'wp_version_check', 'wp_version_check' );
+			remove_action( 'upgrader_process_complete', 'wp_version_check', 10, 0 );
+			$this->remove_auto_update();
 		}
 
 		if ($this->auto_update_plugins == 'disabled') {
 			add_filter( 'pre_site_transient_update_plugins', create_function('$a', "return null;"));
 			remove_action( 'admin_init', '_maybe_update_plugins');
+			remove_action( 'load-plugins.php', 'wp_update_plugins' );
+			remove_action( 'load-update.php', 'wp_update_plugins' );
+			remove_action( 'load-update-core.php', 'wp_update_plugins' );
+			remove_action( 'admin_init', '_maybe_update_plugins' );
+			remove_action( 'wp_update_plugins', 'wp_update_plugins' );
+			remove_action( 'upgrader_process_complete', 'wp_update_plugins', 10, 0 );
+			$this->remove_auto_update();
 		}
 
 		if ($this->auto_update_themes == 'disabled') {
 			add_filter( 'pre_site_transient_update_themes', create_function('$a', "return null;"));
 			remove_action( 'admin_init', '_maybe_update_themes');
+			remove_action( 'load-themes.php', 'wp_update_themes' );
+			remove_action( 'load-update.php', 'wp_update_themes' );
+			remove_action( 'load-update-core.php', 'wp_update_themes' );
+			remove_action( 'wp_update_themes', 'wp_update_themes' );
+			remove_action( 'upgrader_process_complete', 'wp_update_themes', 10, 0 );
+			$this->remove_auto_update();
 		}
+	}
+
+	public function remove_auto_update() {
+		remove_action( 'wp_maybe_auto_update', 'wp_maybe_auto_update' );
+		remove_action( 'init', 'wp_schedule_update_checks' );
+	}
+
+	public function wp_default_scripts(&$scripts) {
+		$scripts->remove('zxcvbn-async');
 	}
 
 	public function wp_default_styles(&$styles) {
@@ -128,10 +137,30 @@ class qqworld_speed4china {
 
 	function fn() {
 ?>
-		
+	<style>
+	#banner {
+		max-width: 100%;
+		display: block;
+		margin: 20px 0;
+		border: 10px solid #fff;
+		box-sizing: border-box;
+		box-shadow: 3px 3px 5px rgba(0,0,0,.1);
+	}
+	@media screen and ( max-width: 1000px ) {
+		#banner {
+			height: auto;
+		}
+	}
+	@media screen and ( max-width: 640px ) {
+		#banner {
+			border-width: 5px;
+		}
+	}
+	</style>
 	<div class="wrap">
 		<h2><?php _e('QQWorld Speed for China', 'qqworld-speed-4-china'); ?></h2>
-		<p><?php _e('Because of Google was blocked by china or access wordpress.org slow, so sometimes china network access wordpress website is very slow, using my plugin will be able to fix this.', 'qqworld-speed-4-china'); ?></p>
+		<p><?php _e('If your host is in china, you might need this plugin to make your website that running faster.', 'qqworld-speed-4-china'); ?></p>
+		<p><img src="https://ps.w.org/qqworld-speed-4-china/assets/banner-772x250.jpg?rev=982686" id="banner" /></p>
 		<p><?php _e("If you want to update, don't forget temporarily enable these options.", 'qqworld-speed-4-china'); ?></p>
 		<form method="post" action="options.php">
 			<?php settings_fields('qqworld-speed-4-china'); ?>
@@ -145,6 +174,17 @@ class qqworld_speed4china {
 							<aside class="admin_box_unit">
 								<label><input type="radio" id="auto-update-core-yes" name="qqworld-speed-4-china[using-google-fonts]" value="enabled" <?php checked($this->using_google_fonts, 'enabled'); ?> /> <?php _e('Enabled', 'qqworld-speed-4-china'); ?></label><br />
 								<label><input type="radio" id="auto-update-core-no" name="qqworld-speed-4-china[using-google-fonts]" value="disabled" <?php checked($this->using_google_fonts, 'disabled'); ?> /> <?php _e('Disabled', 'qqworld-speed-4-china');_e('(Speed up)', 'qqworld-speed-4-china'); ?></label>
+							</aside>
+						</td>
+					</tr>
+					<tr valign="top">
+						<th scope="row">
+							<label for="auto-update-core"><?php _e('Enable zxcvbn-async', 'qqworld-speed-4-china'); ?></label>
+						</th>
+						<td>
+							<aside class="admin_box_unit">
+								<label><input type="radio" id="auto-update-core-yes" name="qqworld-speed-4-china[enable-zxcvbn-async]" value="enabled" <?php checked($this->enable_zxcvbn_async, 'enabled'); ?> /> <?php _e('Enabled', 'qqworld-speed-4-china'); ?></label><br />
+								<label><input type="radio" id="auto-update-core-no" name="qqworld-speed-4-china[enable-zxcvbn-async]" value="disabled" <?php checked($this->enable_zxcvbn_async, 'disabled'); ?> /> <?php _e('Disabled', 'qqworld-speed-4-china');_e('(Speed up)', 'qqworld-speed-4-china'); ?></label>
 							</aside>
 						</td>
 					</tr>

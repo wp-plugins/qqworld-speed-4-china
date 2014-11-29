@@ -10,7 +10,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-如果您的主机在中国，您可能需要这个插件使您的网站跑得更快。<br />
+如果你的主机在中国，你可能需要这个插件使你的网站跑得更快。<br />
 If your host is in china, you might need this plugin to make your website that running faster.
 
 如果你想更新的时候，不要忘记临时启用这些选项。<br />

@@ -16,7 +16,15 @@ If your host is in china, you might need this plugin to make your website that r
 如果你想更新的时候，不要忘记临时启用这些选项。<br />
 If you want to update, don't forget temporarily enable these options.
 
+== Screenshots ==
+
+1. 用户界面
+2. User interface
+
 == Installation ==
+
+1. 上传 `qqworld-speed4china` 目录到 `/wp-content/plugins/`
+2. 在插件页激活 QQWorld-Speed-for-China插件
 
 1. Upload `qqworld-speed4china` directory into `/wp-content/plugins/`
 2. Activate plugin in the plugins admin page

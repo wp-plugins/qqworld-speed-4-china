@@ -3,7 +3,7 @@
 Plugin Name: QQWorld Speed for China
 Plugin URI: http://www.qqworld.org
 Description: If your host is in china, you might need this plugin to make your website that running faster.
-Version: 1.3
+Version: 1.4
 Author: Michael Wang
 Author URI: http://www.qqworld.org
 Text Domain: qqworld-speed-4-china
@@ -88,31 +88,7 @@ class qqworld_speed4china {
 
 	public function wp_default_styles(&$styles) {
 		$styles->remove('open-sans');
-		$open_sans_font_url = '';
-
-		/* translators: If there are characters in your language that are not supported
-		 * by Open Sans, translate this to 'off'. Do not translate into your own language.
-		 */
-		if ( 'off' !== _x( 'on', 'Open Sans font: on or off' ) ) {
-			$subsets = 'latin,latin-ext';
-
-			/* translators: To add an additional Open Sans character subset specific to your language,
-			 * translate this to 'greek', 'cyrillic' or 'vietnamese'. Do not translate into your own language.
-			 */
-			$subset = _x( 'no-subset', 'Open Sans font: add new subset (greek, cyrillic, vietnamese)' );
-
-			if ( 'cyrillic' == $subset ) {
-				$subsets .= ',cyrillic,cyrillic-ext';
-			} elseif ( 'greek' == $subset ) {
-				$subsets .= ',greek,greek-ext';
-			} elseif ( 'vietnamese' == $subset ) {
-				$subsets .= ',vietnamese';
-			}
-
-			// Hotlink Open Sans, for now
-			$open_sans_font_url = "//fonts.useso.com/css?family=Open+Sans:300italic,400italic,600italic,300,400,600&subset=$subsets";
-		}
-		$styles->add( 'open-sans', $open_sans_font_url );
+		$styles->add( 'open-sans', QQWORLD_SPEED4CHINA_URL . 'opensans.css' );
 	}
 
 	public function load_language() {

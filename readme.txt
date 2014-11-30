@@ -2,7 +2,7 @@
 Tags: speed, china
 Requires at least: 3.0
 Tested up to: 4.0.1
-Stable tag: 1.3
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 如果你的主机在中国，你可能需要这个插件使你的网站跑得更快。<br />
 If your host is in china, you might need this plugin to make your website that running faster.
 
-如果你想更新的时候，不要忘记临时启用这些选项。<br />
+如果你想更新的时候，不要忘记临时开启这些选项。<br />
 If you want to update, don't forget temporarily enable these options.
 
 == Screenshots ==
@@ -30,6 +30,10 @@ If you want to update, don't forget temporarily enable these options.
 2. Activate plugin in the plugins admin page
 
 == Changelog ==
+
+= 1.4 =
+新特性：重新启用本地字体，因为360网站卫士常用前端公共库CDN服务有时候依然很慢。<br />
+New feature: Use local fonts again, becarse of use fonts.useso.com was still slow sometimes.
 
 = 1.3 =
 新特性：禁用Dropbox jQuery插件<br />

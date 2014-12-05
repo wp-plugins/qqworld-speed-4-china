@@ -2,7 +2,7 @@
 Tags: speed, china
 Requires at least: 3.0
 Tested up to: 4.0.1
-Stable tag: 1.4
+Stable tag: 1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,10 @@ If you want to update, don't forget temporarily enable these options.
 2. Activate plugin in the plugins admin page
 
 == Changelog ==
+
+= 1.5 =
+新特性：禁用全球公认头像(Gravatar)<br />
+New feature: Disabled Gravatar.
 
 = 1.4 =
 新特性：重新启用本地字体，因为360网站卫士常用前端公共库CDN服务有时候依然很慢。<br />

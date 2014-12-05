@@ -32,7 +32,7 @@ If you want to update, don't forget temporarily enable these options.
 == Changelog ==
 
 = 1.5 =
-新特性：禁用全球公认头像(Gravatar)<br />
+新特性：禁用全球通用头像(Gravatar)<br />
 New feature: Disabled Gravatar.
 
 = 1.4 =

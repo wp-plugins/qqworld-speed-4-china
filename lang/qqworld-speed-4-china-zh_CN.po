@@ -1,0 +1,102 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: QQworld Speed for China\n"
+"Report-Msgid-Bugs-To: http://www.qqworld.org\n"
+"POT-Creation-Date: 2014-11-29 15:27+0800\n"
+"PO-Revision-Date: 2014-11-29 15:56+0800\n"
+"Last-Translator: Michael Wang <admin@qqworld.org>\n"
+"Language-Team: QQWorld <admin@qqworld.org>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Generator: Poedit 1.6.9\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#. translators: If there are characters in your language that are not supported
+#. * by Open Sans, translate this to 'off'. Do not translate into your own language.
+#.
+#: qqworld-speed4china.php:96
+msgctxt "Open Sans font: on or off"
+msgid "on"
+msgstr ""
+
+#. translators: To add an additional Open Sans character subset specific to your language,
+#. * translate this to 'greek', 'cyrillic' or 'vietnamese'. Do not translate into your own language.
+#.
+#: qqworld-speed4china.php:102
+msgctxt "Open Sans font: add new subset (greek, cyrillic, vietnamese)"
+msgid "no-subset"
+msgstr ""
+
+#: qqworld-speed4china.php:125
+msgid "Settings"
+msgstr ""
+
+#: qqworld-speed4china.php:135 qqworld-speed4china.php:142
+msgid "QQWorld Speed for China"
+msgstr "QQWorld加速中国版"
+
+#: qqworld-speed4china.php:143
+msgid ""
+"If your host is in china, you might need this plugin to make your website "
+"that running faster."
+msgstr "如果你的主机在中国，你可能需要这个插件使你的网站跑得更快。"
+
+#: qqworld-speed4china.php:144
+msgid "If you want to update, don't forget temporarily enable these options."
+msgstr "如果你想更新的时候，不要忘记临时开启这些选项。"
+
+#: qqworld-speed4china.php:151
+msgid "Using Google Fonts"
+msgstr "使用谷歌字体"
+
+#: qqworld-speed4china.php:155 qqworld-speed4china.php:166
+#: qqworld-speed4china.php:177 qqworld-speed4china.php:188
+#: qqworld-speed4china.php:199
+msgid "Enabled"
+msgstr "开启"
+
+#: qqworld-speed4china.php:156 qqworld-speed4china.php:167
+#: qqworld-speed4china.php:178 qqworld-speed4china.php:189
+#: qqworld-speed4china.php:200
+msgid "Disabled"
+msgstr "禁用"
+
+#: qqworld-speed4china.php:156 qqworld-speed4china.php:167
+#: qqworld-speed4china.php:178 qqworld-speed4china.php:189
+#: qqworld-speed4china.php:200
+msgid "(Speed up)"
+msgstr "（加速）"
+
+#: qqworld-speed4china.php:162
+msgid "Enable zxcvbn-async"
+msgstr "启用Dropbox同步插件"
+
+#: qqworld-speed4china.php:173
+msgid "Auto Update Core"
+msgstr "自动检查升级核心"
+
+#: qqworld-speed4china.php:184
+msgid "Auto Update Plugins"
+msgstr "自动检查升级插件"
+
+#: qqworld-speed4china.php:195
+msgid "Auto Update Themes"
+msgstr "自动检查升级主题"
+
+#~ msgid ""
+#~ "Because of Google was blocked by china or access wordpress.org slow, so "
+#~ "sometimes china network access wordpress website is very slow, using my "
+#~ "plugin will be able to fix this."
+#~ msgstr ""
+#~ "因为中国大陆屏蔽了Google或访问wordpress.org速度慢，所以有时候会导致大陆的"
+#~ "网络访问Wordpress站点速度非常慢，使用本插件可以有效解决这个问题。"
+
+#~ msgid "Michael Wang"
+#~ msgstr "王晓骞"

@@ -3,7 +3,7 @@
 Plugin Name: QQWorld Speed for China
 Plugin URI: http://www.qqworld.org
 Description: If your host is in china, you might need this plugin to make your website that running faster.
-Version: 1.5
+Version: 1.5.1
 Author: Michael Wang
 Author URI: http://www.qqworld.org
 Text Domain: qqworld-speed-4-china
@@ -26,6 +26,7 @@ class qqworld_speed4china {
 		add_action( 'admin_init', array($this, 'register_setting') );
 		add_filter( 'plugin_row_meta', array($this, 'registerPluginLinks'),10,2 );
 		add_action( 'plugins_loaded', array($this, 'load_language') );
+		add_action( 'admin_enqueue_scripts', array($this, 'admin_enqueue_scripts') );
 		$this->get_value();
 		$this->speed_up();
 	}
@@ -40,6 +41,11 @@ class qqworld_speed4china {
 		$this->auto_update_code = isset($this->values['auto-update-core']) ? $this->values['auto-update-core'] : 'disabled';
 		$this->auto_update_plugins = isset($this->values['auto-plugins-plugins']) ? $this->values['auto-plugins-plugins'] : 'disabled';
 		$this->auto_update_themes = isset($this->values['auto-update-themes']) ? $this->values['auto-update-themes'] : 'disabled';
+	}
+
+	public function admin_enqueue_scripts() {
+		//for 3.5+ uploader
+		wp_enqueue_media();
 	}
 
 	public function speed_up() {

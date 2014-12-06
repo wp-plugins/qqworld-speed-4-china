@@ -6,12 +6,12 @@ Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-如果你的主机在中国，你可能需要这个插件使你的网站跑得更快。If your host is in china, you might need this plugin to make your website that running faster. 
+如果你的主机在中国，你可能需要这个插件使你的网站跑得更快。If your host is in china, you might need this plugin to make your website to running faster. 
 
 == Description ==
 
 如果你的主机在中国，你可能需要这个插件使你的网站跑得更快。<br />
-If your host is in china, you might need this plugin to make your website that running faster.
+If your host is in china, you might need this plugin to make your website to running faster.
 
 如果你想更新的时候，不要忘记临时开启这些选项。<br />
 If you want to update, don't forget temporarily enable these options.

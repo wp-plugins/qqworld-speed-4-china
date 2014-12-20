@@ -3,7 +3,7 @@
 Plugin Name: QQWorld Speed for China
 Plugin URI: https://wordpress.org/plugins/qqworld-speed-4-china/
 Description: If your host is in china, you might need this plugin to make your website that running faster.
-Version: 1.5.2
+Version: 1.5.3
 Author: Michael Wang
 Author URI: http://www.qqworld.org
 Text Domain: qqworld-speed-4-china
@@ -18,7 +18,7 @@ class qqworld_speed4china {
 	var $using_gravatar;
 	var $default_avatar;
 	var $local_avatar;
-	var $auto_update_code;
+	var $auto_update_core;
 	var $auto_update_plugins;
 	var $auto_update_themes;
 	var $advanced_speed_up;
@@ -43,10 +43,16 @@ class qqworld_speed4china {
 		$this->using_gravatar = isset($this->values['using-gravatar']) ? $this->values['using-gravatar'] : 'enabled';
 		$this->local_avatar = isset($this->values['local-avatar']) && !empty($this->values['local-avatar']) ? $this->values['local-avatar'] : $this->default_avatar;
 		$this->enable_zxcvbn_async = isset($this->values['enable-zxcvbn-async']) ? $this->values['enable-zxcvbn-async'] : 'disabled';
-		$this->auto_update_code = isset($this->values['auto-update-core']) ? $this->values['auto-update-core'] : 'disabled';
-		$this->auto_update_plugins = isset($this->values['auto-plugins-plugins']) ? $this->values['auto-plugins-plugins'] : 'disabled';
+		$this->auto_update_core = isset($this->values['auto-update-core']) ? $this->values['auto-update-core'] : 'disabled';
+		$this->auto_update_plugins = isset($this->values['auto-update-plugins']) ? $this->values['auto-update-plugins'] : 'disabled';
 		$this->auto_update_themes = isset($this->values['auto-update-themes']) ? $this->values['auto-update-themes'] : 'disabled';
 		$this->advanced_speed_up = isset($this->values['advanced-speed-up']) ? $this->values['advanced-speed-up'] : 'disabled';
+		$this->update_plugins_ids = isset($this->values['update_plugins_ids']) ? $this->values['update_plugins_ids'] : array();
+		$this->update_themes_ids = isset($this->values['update_themes_ids']) ? $this->values['update_themes_ids'] : array();
+		$this->update_core_ids = isset($this->values['update_core_ids']) ? $this->values['update_core_ids'] : array();
+		$this->update_plugins_roles_ids = isset($this->values['update_plugins_roles_ids']) ? $this->values['update_plugins_roles_ids'] : array();
+		$this->update_themes_roles_ids = isset($this->values['update_themes_roles_ids']) ? $this->values['update_themes_roles_ids'] : array();
+		$this->update_core_roles_ids = isset($this->values['update_core_roles_ids']) ? $this->values['update_core_roles_ids'] : array();
 	}
 
 	public function admin_enqueue_scripts() {
@@ -67,7 +73,7 @@ class qqworld_speed4china {
 			add_action( 'wp_default_scripts', array($this, 'wp_default_scripts') );
 		}
 
-		if ($this->auto_update_code == 'disabled') {
+		if ($this->auto_update_core == 'disabled') {
 			add_filter( 'pre_site_transient_update_core', create_function('$a', "return null;"));
 			remove_action( 'admin_init', '_maybe_update_core');
 			remove_action( 'wp_version_check', 'wp_version_check' );
@@ -83,7 +89,7 @@ class qqworld_speed4china {
 			remove_action( 'load-update-core.php', 'wp_update_plugins' );
 			remove_action( 'admin_init', '_maybe_update_plugins' );
 			remove_action( 'wp_update_plugins', 'wp_update_plugins' );
-			remove_action( 'upgrader_process_complete', 'wp_update_plugins', 10, 0 );
+			remove_action( 'upgrader_process_complete', 'wp_update_plugins' );
 
 			$timestamp = wp_next_scheduled( 'wp_update_plugins' );
 			wp_unschedule_event( $timestamp, 'wp_update_plugins');
@@ -98,7 +104,7 @@ class qqworld_speed4china {
 			remove_action( 'load-update.php', 'wp_update_themes' );
 			remove_action( 'load-update-core.php', 'wp_update_themes' );
 			remove_action( 'wp_update_themes', 'wp_update_themes' );
-			remove_action( 'upgrader_process_complete', 'wp_update_themes', 10, 0 );
+			remove_action( 'upgrader_process_complete', 'wp_update_themes' );
 
 			$timestamp = wp_next_scheduled( 'wp_update_themes' );
 			wp_unschedule_event( $timestamp, 'wp_update_themes');
@@ -107,20 +113,15 @@ class qqworld_speed4china {
 		}
 
 		if ($this->advanced_speed_up == 'enabled') {
-			add_action( 'http_api_curl', array($this, 'http_api_curl') );
+			add_filter( 'user_has_cap', array($this, 'user_has_cap') );
 		}
 	}
 
-	public function http_api_curl(&$handle) {
-		$handle = curl_init();
-	}
-
-	public function disabled_get_update_plugins_data($url, $scheme, $orig_scheme) {
-		return strstr($url, 'api.wordpress.org/plugins/update-check') ? '' : $url;
-	}
-
-	public function disabled_get_update_themes_data($url, $scheme, $orig_scheme) {
-		return strstr($url, 'api.wordpress.org/themes/update-check') ? '' : $url;
+	public function user_has_cap($allcaps) {
+		if (isset($allcaps['update_plugins'])) unset($allcaps['update_plugins']);
+		if (isset($allcaps['update_themes'])) unset($allcaps['update_themes']);
+		if (isset($allcaps['update_core'])) unset($allcaps['update_core']);
+		return $allcaps;
 	}
 
 	public function get_avatar($avatar, $id_or_email, $size, $default, $alt) {
@@ -154,15 +155,15 @@ class qqworld_speed4china {
 		return $links;
 	}
 
-	function register_setting() {
+	public function register_setting() {
 		register_setting('qqworld-speed-4-china', 'qqworld-speed-4-china');
 	}
 
 	public function create_menu() {
-		add_submenu_page('options-general.php', __('QQWorld Speed for China', 'qqworld-speed-4-china'), __('QQWorld Speed for China', 'qqworld-speed-4-china'), 'administrator', 'qqworld-speed-4-china', array($this, 'fn') );
+		add_submenu_page('options-general.php', __('QQWorld Speed for China', 'qqworld-speed-4-china'), __('QQWorld Speed for China', 'qqworld-speed-4-china'), 'administrator', 'qqworld-speed-4-china', array($this, 'page') );
 	}
 
-	function fn() {
+	public function page() {
 ?>
 	<style>
 	#banner {
@@ -193,6 +194,9 @@ class qqworld_speed4china {
 		<p><img src="<?php echo QQWORLD_SPEED4CHINA_URL; ?>images/banner-772x250.jpg" width="772" height="250" id="banner" /></p>
 		<p><?php _e("If you want to update, don't forget temporarily enable these options.", 'qqworld-speed-4-china'); ?></p>
 		<form method="post" action="options.php">
+			<input type="hidden" name="qqworld-speed-4-china[update_plugins_roles_ids]" value="" />
+			<input type="hidden" name="qqworld-speed-4-china[update_themes_roles_ids]" value="" />
+			<input type="hidden" name="qqworld-speed-4-china[update_core_roles_ids]" value="" />
 			<?php settings_fields('qqworld-speed-4-china'); ?>
 			<table class="form-table">
 				<tbody>
@@ -256,8 +260,8 @@ class qqworld_speed4china {
 						</th>
 						<td>
 							<aside class="admin_box_unit">
-								<label><input type="radio" id="auto-update-core-yes" name="qqworld-speed-4-china[auto-update-core]" value="enabled" <?php checked($this->auto_update_code, 'enabled'); ?> /> <?php _e('Enabled', 'qqworld-speed-4-china'); ?></label><br />
-								<label><input type="radio" id="auto-update-core-no" name="qqworld-speed-4-china[auto-update-core]" value="disabled" <?php checked($this->auto_update_code, 'disabled'); ?> /> <?php _e('Disabled', 'qqworld-speed-4-china');_e('(Speed up)', 'qqworld-speed-4-china'); ?></label>
+								<label><input type="radio" id="auto-update-core-yes" name="qqworld-speed-4-china[auto-update-core]" value="enabled" <?php checked($this->auto_update_core, 'enabled'); ?> /> <?php _e('Enabled', 'qqworld-speed-4-china'); ?></label><br />
+								<label><input type="radio" id="auto-update-core-no" name="qqworld-speed-4-china[auto-update-core]" value="disabled" <?php checked($this->auto_update_core, 'disabled'); ?> /> <?php _e('Disabled', 'qqworld-speed-4-china');_e('(Speed up)', 'qqworld-speed-4-china'); ?></label>
 							</aside>
 						</td>
 					</tr>
@@ -267,8 +271,8 @@ class qqworld_speed4china {
 						</th>
 						<td>
 							<aside class="admin_box_unit">
-								<label><input type="radio" id="auto-update-plugins-yes" name="qqworld-speed-4-china[auto-plugins-plugins]" value="enabled" <?php checked($this->auto_update_plugins, 'enabled'); ?> /> <?php _e('Enabled', 'qqworld-speed-4-china'); ?></label><br />
-								<label><input type="radio" id="auto-update-plugins-no" name="qqworld-speed-4-china[auto-plugins-plugins]" value="disabled" <?php checked($this->auto_update_plugins, 'disabled'); ?> /> <?php _e('Disabled', 'qqworld-speed-4-china');_e('(Speed up)', 'qqworld-speed-4-china'); ?></label>
+								<label><input type="radio" id="auto-update-plugins-yes" name="qqworld-speed-4-china[auto-update-plugins]" value="enabled" <?php checked($this->auto_update_plugins, 'enabled'); ?> /> <?php _e('Enabled', 'qqworld-speed-4-china'); ?></label><br />
+								<label><input type="radio" id="auto-update-plugins-no" name="qqworld-speed-4-china[auto-update-plugins]" value="disabled" <?php checked($this->auto_update_plugins, 'disabled'); ?> /> <?php _e('Disabled', 'qqworld-speed-4-china');_e('(Speed up)', 'qqworld-speed-4-china'); ?></label>
 							</aside>
 						</td>
 					</tr>

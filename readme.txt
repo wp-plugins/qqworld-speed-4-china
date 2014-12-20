@@ -2,7 +2,7 @@
 Tags: speed, china
 Requires at least: 3.0
 Tested up to: 4.1
-Stable tag: 1.5.2
+Stable tag: 1.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,10 @@ If you want to update, don't forget temporarily enable these options.
 2. Activate plugin in the plugins admin page
 
 == Changelog ==
+
+= 1.5.3 =
+新特性：完善高级加速，开启此项会禁止所有的更新动作，但仍然可以接受核心升级通知。<br />
+New feature: Complete advanced speed up, If enabled this option, all update action will be disabled. but still can get update core notification.
 
 = 1.5.2 =
 新特性：高级加速，开启此项会禁止所有的更新动作。<br />

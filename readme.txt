@@ -2,7 +2,7 @@
 Tags: speed, china
 Requires at least: 3.0
 Tested up to: 4.1
-Stable tag: 1.5.3
+Stable tag: 1.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,14 @@ If you want to update, don't forget temporarily enable these options.
 2. Activate plugin in the plugins admin page
 
 == Changelog ==
+
+= 1.5.4 =
+新特性：<br />
+前端用360 CDN前端公共资源库替代所有可能的Google字体库<br />
+增加后台使用360 CDN前端公共资源库替代Google字体库的选项<br />
+New feature:<br />
+Using 360 CDN fonts instead all possible googleapi fonts.<br />
+Adds option which using 360 CDN fonts instead googleapi fonts on admin page.
 
 = 1.5.3 =
 新特性：完善高级加速，开启此项会禁止所有的更新动作，但仍然可以接受核心升级通知。<br />

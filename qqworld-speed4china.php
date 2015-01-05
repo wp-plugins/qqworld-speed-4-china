@@ -3,7 +3,7 @@
 Plugin Name: QQWorld Speed for China
 Plugin URI: https://wordpress.org/plugins/qqworld-speed-4-china/
 Description: If your host is in china, you might need this plugin to make your website that running faster.
-Version: 1.5.3
+Version: 1.5.4
 Author: Michael Wang
 Author URI: http://www.qqworld.org
 Text Domain: qqworld-speed-4-china
@@ -39,6 +39,7 @@ class qqworld_speed4china {
 	public function get_value() {
 		$this->default_avatar = QQWORLD_SPEED4CHINA_URL . 'images/avatar_256x256.png';
 		$this->values = get_option('qqworld-speed-4-china');
+		$this->using_360_cdn_frontend = isset($this->values['using-360-cdn-frontend']) ? $this->values['using-360-cdn-frontend'] : 'disabled';
 		$this->using_google_fonts = isset($this->values['using-google-fonts']) ? $this->values['using-google-fonts'] : 'disabled';
 		$this->using_gravatar = isset($this->values['using-gravatar']) ? $this->values['using-gravatar'] : 'enabled';
 		$this->local_avatar = isset($this->values['local-avatar']) && !empty($this->values['local-avatar']) ? $this->values['local-avatar'] : $this->default_avatar;
@@ -60,9 +61,26 @@ class qqworld_speed4china {
 		wp_enqueue_media();
 	}
 
+	function cdn_callback($buffer) {
+		return str_replace('googleapis.com', 'useso.com', $buffer);
+	}
+	function buffer_start() {
+		ob_start(array($this, "cdn_callback"));
+	}
+	function buffer_end() {
+		ob_end_flush();
+	}
+
 	public function speed_up() {
+		if ($this->using_360_cdn_frontend == 'enabled') {
+			add_action('init', array($this, 'buffer_start') );
+			add_action('shutdown', array($this, 'buffer_end') );
+		}
+
 		if ($this->using_google_fonts == 'disabled') {
 			add_action( 'wp_default_styles', array($this, 'wp_default_styles') );
+		} elseif ($this->using_google_fonts == '360') {
+			add_action( 'wp_default_styles', array($this, 'wp_default_styles_360_cdn') );
 		}
 
 		if ($this->using_gravatar == 'disabled') {
@@ -143,6 +161,35 @@ class qqworld_speed4china {
 		$styles->add( 'open-sans', QQWORLD_SPEED4CHINA_URL . 'opensans.css' );
 	}
 
+	public function wp_default_styles_360_cdn(&$styles) {
+		$styles->remove('open-sans');
+		$open_sans_font_url = '';
+
+		/* translators: If there are characters in your language that are not supported
+		 * by Open Sans, translate this to 'off'. Do not translate into your own language.
+		 */
+		if ( 'off' !== _x( 'on', 'Open Sans font: on or off' ) ) {
+			$subsets = 'latin,latin-ext';
+
+			/* translators: To add an additional Open Sans character subset specific to your language,
+			 * translate this to 'greek', 'cyrillic' or 'vietnamese'. Do not translate into your own language.
+			 */
+			$subset = _x( 'no-subset', 'Open Sans font: add new subset (greek, cyrillic, vietnamese)' );
+
+			if ( 'cyrillic' == $subset ) {
+				$subsets .= ',cyrillic,cyrillic-ext';
+			} elseif ( 'greek' == $subset ) {
+				$subsets .= ',greek,greek-ext';
+			} elseif ( 'vietnamese' == $subset ) {
+				$subsets .= ',vietnamese';
+			}
+
+			// Hotlink Open Sans, for now
+			$open_sans_font_url = "//fonts.useso.com/css?family=Open+Sans:300italic,400italic,600italic,300,400,600&subset=$subsets";
+		}
+		$styles->add( 'open-sans', $open_sans_font_url );
+	}
+
 	public function load_language() {
 		load_plugin_textdomain( 'qqworld-speed-4-china', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
 	}
@@ -202,11 +249,23 @@ class qqworld_speed4china {
 				<tbody>
 					<tr valign="top">
 						<th scope="row">
-							<label for="use-google-fonts"><?php _e('Using Google Fonts', 'qqworld-speed-4-china'); ?></label>
+							<label for="use-360-cdn"><?php _e('Using 360 CDN on Front-End', 'qqworld-speed-4-china'); ?></label>
+						</th>
+						<td>
+							<aside class="admin_box_unit">
+								<label><input type="radio" id="use-360-cdn-yes" name="qqworld-speed-4-china[using-360-cdn-frontend]" value="enabled" <?php checked($this->using_360_cdn_frontend, 'enabled'); ?> /> <?php _e('Enabled', 'qqworld-speed-4-china');_e('(Speed up)', 'qqworld-speed-4-china'); ?></label><br />
+								<label><input type="radio" id="use-360-cdn-no" name="qqworld-speed-4-china[using-360-cdn-frontend]" value="disabled" <?php checked($this->using_360_cdn_frontend, 'disabled'); ?> /> <?php _e('Disabled', 'qqworld-speed-4-china'); ?></label>
+							</aside>
+						</td>
+					</tr>
+					<tr valign="top">
+						<th scope="row">
+							<label for="use-google-fonts"><?php _e('Using Google Fonts on Admin', 'qqworld-speed-4-china'); ?></label>
 						</th>
 						<td>
 							<aside class="admin_box_unit">
 								<label><input type="radio" id="use-google-fonts-yes" name="qqworld-speed-4-china[using-google-fonts]" value="enabled" <?php checked($this->using_google_fonts, 'enabled'); ?> /> <?php _e('Enabled', 'qqworld-speed-4-china'); ?></label><br />
+								<label><input type="radio" id="use-google-fonts-360" name="qqworld-speed-4-china[using-google-fonts]" value="360" <?php checked($this->using_google_fonts, '360'); ?> /> <?php _e('Using 360 CDN', 'qqworld-speed-4-china');_e('(Speed up)', 'qqworld-speed-4-china'); ?></label><br />
 								<label><input type="radio" id="use-google-fonts-no" name="qqworld-speed-4-china[using-google-fonts]" value="disabled" <?php checked($this->using_google_fonts, 'disabled'); ?> /> <?php _e('Disabled', 'qqworld-speed-4-china');_e('(Speed up)', 'qqworld-speed-4-china'); ?></label>
 							</aside>
 						</td>

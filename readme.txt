@@ -1,4 +1,5 @@
 === QQWorld Speed for China ===
+Contributors: qqworld
 Tags: speed, china
 Requires at least: 3.0
 Tested up to: 4.1
